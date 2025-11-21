@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Which of the following is not a type of database model?",
+    "options": ["Hierarchical", "Network", "Relational", "Functional"],
+    "answer": "Functional"
+  },
+  {
+    "question": "Which SQL command is used to remove a table from the database?",
+    "options": ["DELETE", "REMOVE", "DROP", "CLEAR"],
+    "answer": "DROP"
+  },
+  {
+    "question": "Which key uniquely identifies each record in a table?",
+    "options": ["Foreign Key", "Candidate Key", "Primary Key", "Alternate Key"],
+    "answer": "Primary Key"
+  },
+  {
+    "question": "Which SQL statement is used to extract data from a database?",
+    "options": ["GET", "SELECT", "EXTRACT", "CHOOSE"],
+    "answer": "SELECT"
+  },
+  {
+    "question": "In SQL, which clause is used to filter records?",
+    "options": ["WHERE", "GROUP BY", "ORDER BY", "HAVING"],
+    "answer": "WHERE"
+  },
+  {
+    "question": "Which normal form removes transitive dependency?",
+    "options": ["1NF", "2NF", "3NF", "BCNF"],
+    "answer": "3NF"
+  },
+  {
+    "question": "Which command is used to modify existing data in a table?",
+    "options": ["INSERT", "UPDATE", "MODIFY", "CHANGE"],
+    "answer": "UPDATE"
+  },
+  {
+    "question": "What is the full form of DBMS?",
+    "options": ["Data Base Management System", "Data Management System", "Database Managed Server", "Data Based Manipulation System"],
+    "answer": "Data Base Management System"
+  },
+  {
+    "question": "Which of the following is a DDL command?",
+    "options": ["SELECT", "INSERT", "CREATE", "UPDATE"],
+    "answer": "CREATE"
+  },
+  {
+    "question": "Which of the following ensures data integrity?",
+    "options": ["Constraints", "Views", "Joins", "Functions"],
+    "answer": "Constraints"
+  }
+]
