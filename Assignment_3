@@ -1,0 +1,193 @@
+import json, random, datetime, os
+
+USER_FILE = 'users.txt'
+SCORE_FILE = 'scores.txt'
+
+def load_data(filename):
+    if not os.path.exists(filename):
+        return {}
+    with open(filename, 'r') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+
+def save_data(filename, data):
+    with open(filename, 'w') as f:
+        json.dump(data, f, indent=4)
+
+
+def register():
+    users = load_data(USER_FILE)
+    username = input("Enter username: ").strip()
+    if username in users:
+        print("Username already exists!\n")
+        return
+    password = input("Enter password: ").strip()
+    name = input("Enter full name: ").strip()
+    email = input("Enter email: ").strip()
+    branch = input("Enter branch: ").strip()
+    year = input("Enter year: ").strip()
+    contact = input("Enter contact number: ").strip()
+
+    users[username] = {
+        'password': password,
+        'name': name,
+        'email': email,
+        'branch': branch,
+        'year': year,
+        'contact': contact
+    }
+    save_data(USER_FILE, users)
+    print("Registration successful!\n")
+
+def login():
+    users = load_data(USER_FILE)
+    username = input("Enter username: ").strip()
+    password = input("Enter password: ").strip()
+    if username == 'admin' and password == 'admin123':
+        print("Admin login successful!\n")
+        return 'admin'
+    if username in users and users[username]['password'] == password:
+        print(f"Login successful! Welcome, {username}.\n")
+        return username
+    else:
+        print("Invalid credentials.\n")
+        return None
+
+def update_profile(username):
+    users = load_data(USER_FILE)
+    if username not in users:
+        print("User not found!\n")
+        return
+    print("Update Profile (press Enter to skip any field):")
+    for field in ['email', 'branch', 'year', 'contact']:
+        new_value = input(f"Enter new {field} ({users[username][field]}): ").strip()
+        if new_value:
+            users[username][field] = new_value
+    save_data(USER_FILE, users)
+    print("Profile updated successfully!\n")
+
+def show_profile(username):
+    users = load_data(USER_FILE)
+    if username not in users:
+        print("User not found!\n")
+        return
+    print("\n--- Profile Details ---")
+    for key, val in users[username].items():
+        if key != 'password':
+            print(f"{key.capitalize()}: {val}")
+    print()
+
+
+def load_questions(category):
+    filename = f"questions_{category.lower()}.txt"
+    if not os.path.exists(filename):
+        print("Question file not found!\n")
+        return []
+    with open(filename, 'r') as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            print("Invalid question file format.\n")
+            return []
+
+def attempt_quiz(username):
+    print("Available Categories: DSA | DBMS | PYTHON")
+    category = input("Enter category: ").strip().lower()
+    questions = load_questions(category)
+    if not questions:
+        return
+    random.shuffle(questions)
+    questions = questions[:5]
+    score = 0
+
+    for i, q in enumerate(questions, 1):
+        print(f"\nQ{i}. {q['question']}")
+        for idx, opt in enumerate(q['options'], 1):
+            print(f"{idx}. {opt}")
+        try:
+            ans = int(input("Enter your choice (1-4): "))
+            if q['options'][ans - 1].lower() == q['answer'].lower():
+                score += 1
+        except:
+            print("Invalid choice, moving to next question.")
+
+    print(f"\nQuiz Completed! You scored {score}/{len(questions)}")
+    record_score(username, category, score, len(questions))
+
+def record_score(username, category, score, total):
+    scores = load_data(SCORE_FILE)
+    if username not in scores:
+        scores[username] = []
+    scores[username].append({
+        'category': category,
+        'score': score,
+        'total': total,
+        'datetime': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    })
+    save_data(SCORE_FILE, scores)
+
+def view_scores(username):
+    scores = load_data(SCORE_FILE)
+    if username not in scores or not scores[username]:
+        print("No quiz attempts yet.\n")
+        return
+    print("\n--- Quiz History ---")
+    for s in scores[username]:
+        print(f"{s['datetime']} | {s['category'].upper()} | {s['score']}/{s['total']}")
+    print()
+
+
+def main():
+    print("=== QUIZ APPLICATION (LNCT) ===")
+    logged_in = None
+    while True:
+        print('''
+1. Register
+2. Login
+3. Attempt Quiz
+4. View Scores
+5. Profile
+6. Update Profile
+7. Logout
+8. Exit
+        ''')
+        choice = input("Enter choice: ").strip()
+
+        if choice == '1':
+            register()
+        elif choice == '2':
+            logged_in = login()
+        elif choice == '3':
+            if logged_in and logged_in != 'admin':
+                attempt_quiz(logged_in)
+            else:
+                print("Please login as user first!\n")
+        elif choice == '4':
+            if logged_in and logged_in != 'admin':
+                view_scores(logged_in)
+            else:
+                print("Please login as user first!\n")
+        elif choice == '5':
+            if logged_in and logged_in != 'admin':
+                show_profile(logged_in)
+            else:
+                print("Please login as user first!\n")
+        elif choice == '6':
+            if logged_in and logged_in != 'admin':
+                update_profile(logged_in)
+            else:
+                print("Please login as user first!\n")
+        elif choice == '7':
+            logged_in = None
+            print("Logged out successfully!\n")
+        elif choice == '8':
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice!\n")
+
+if __name__ == '__main__':
+    main()
+
