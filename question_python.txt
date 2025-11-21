@@ -1,0 +1,52 @@
+[
+  {
+    "question": "Which of the following is a mutable data type in Python?",
+    "options": ["Tuple", "List", "String", "Integer"],
+    "answer": "List"
+  },
+  {
+    "question": "What is the output of 2 ** 3 in Python?",
+    "options": ["6", "8", "9", "5"],
+    "answer": "8"
+  },
+  {
+    "question": "Which keyword is used to define a function in Python?",
+    "options": ["func", "function", "def", "define"],
+    "answer": "def"
+  },
+  {
+    "question": "What is the output of print(type([]))?",
+    "options": ["<class 'tuple'>", "<class 'list'>", "<class 'dict'>", "<class 'set'>"],
+    "answer": "<class 'list'>"
+  },
+  {
+    "question": "Which of the following is not a Python keyword?",
+    "options": ["with", "lambda", "yield", "then"],
+    "answer": "then"
+  },
+  {
+    "question": "What is used to handle exceptions in Python?",
+    "options": ["catch", "try-except", "error", "exception"],
+    "answer": "try-except"
+  },
+  {
+    "question": "Which of the following is used to comment multiple lines in Python?",
+    "options": ["//", "/* */", "''' '''", "#"],
+    "answer": "''' '''"
+  },
+  {
+    "question": "Which of these is not a core data type in Python?",
+    "options": ["Lists", "Dictionary", "Tuples", "Class"],
+    "answer": "Class"
+  },
+  {
+    "question": "Which operator is used for floor division in Python?",
+    "options": ["/", "//", "%", "**"],
+    "answer": "//"
+  },
+  {
+    "question": "Which function is used to find the length of a list?",
+    "options": ["count()", "size()", "length()", "len()"],
+    "answer": "len()"
+  }
+]
